@@ -1,35 +1,8 @@
 import appConfig from "../config.json";
 import { Box, Button, Text, TextField, Image } from "@skynexui/components";
-function GlobalStyle() {
-  return (
-    <style global jsx>{`
-      * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
-        list-style: none;
-      }
-      body {
-        font-family: "Open Sans", sans-serif;
-      }
-      /* App fit Height */
-      html,
-      body,
-      #__next {
-        min-height: 100vh;
-        display: flex;
-        flex: 1;
-      }
-      #__next {
-        flex: 1;
-      }
-      #__next > * {
-        flex: 1;
-      }
-      /* ./App fit Height */
-    `}</style>
-  );
-}
+import { useState } from "react";
+import { useRouter } from "next/router";
+
 function Titulo(props) {
   const Tag = props.tag;
   return (
@@ -48,24 +21,11 @@ function Titulo(props) {
   );
 }
 
-/* function HomePage() {
-    return(
-        <div>
-            <GlobalStyle/>
-            <Titulo tag="h1">Boas vindas de volta!</Titulo>
-            <Titulo tag="h2">Aluracord - Alura Matrix</Titulo>
-        </div>
-    )
-}
-
-export default HomePage */
-
 export default function PaginaInicial() {
-  const username = "zairobastos";
-
+  const [username, setUserName] = useState("");
+  const roteamento = useRouter(username);
   return (
     <>
-      <GlobalStyle />
       <Box
         styleSheet={{
           display: "flex",
@@ -100,6 +60,10 @@ export default function PaginaInicial() {
           {/* Formulário */}
           <Box
             as="form"
+            onSubmit={(e) => {
+              e.preventDefault();
+              roteamento.push("/chats");
+            }}
             styleSheet={{
               display: "flex",
               flexDirection: "column",
@@ -130,6 +94,10 @@ export default function PaginaInicial() {
                   mainColorHighlight: appConfig.theme.colors.primary[500],
                   backgroundColor: appConfig.theme.colors.neutrals[800],
                 },
+              }}
+              value={username}
+              onChange={(e) => {
+                setUserName(e.target.value);
               }}
             />
             <Button
