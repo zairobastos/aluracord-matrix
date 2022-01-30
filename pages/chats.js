@@ -1,6 +1,7 @@
 import { Box, Text, TextField, Image, Button } from "@skynexui/components";
 import { useState } from "react";
 import appConfig from "../config.json";
+import { AiOutlineSend } from "react-icons/ai";
 
 export default function ChatPage() {
   const [mensagem, setMensagem] = useState("");
@@ -96,7 +97,14 @@ export default function ChatPage() {
                 }
               }}
             />
-            <button>Enviar</button>
+            <AiOutlineSend
+              size="30"
+              color="#fff"
+              title="enviar"
+              onClick={() => {
+                handleNovaMensagem(mensagem);
+              }}
+            />
           </Box>
         </Box>
       </Box>
